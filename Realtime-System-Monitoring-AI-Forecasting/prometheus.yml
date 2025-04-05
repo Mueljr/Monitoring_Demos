@@ -1,0 +1,20 @@
+global:
+  scrape_interval: 10s  # How often to scrape targets 
+
+scrape_configs:
+  - job_name: 'prometheus'  # This defines the job to scrape Prometheus itself
+    static_configs:
+      - targets: ['localhost:9090']  # Prometheus will scrape itself at this address 
+
+  - job_name: 'node_exporter'  # Scraping Node Exporter for system metrics
+    static_configs:
+      - targets: ['localhost:9100']  # This assumes node_exporter is running on the same machine
+
+alerting:
+  alertmanagers:
+    - static_configs:
+        - targets:
+          - 'localhost:9093'  # The Alertmanager address
+
+rule_files:
+  - "alert.rules.yml"

@@ -1,0 +1,11 @@
+groups:
+  - name: example
+    rules:
+      - alert: HighCPUUsage
+        expr: avg(rate(node_cpu_seconds_total{mode="user"}[5m])) by (instance) > 0.6
+        for: 10s
+        labels:
+          severity: high
+        annotations:
+          summary: "CPU usage is high on instance {{ $labels.instance }}"
+          description: "CPU usage on instance {{ $labels.instance }} is above 60%. Current value: {{ $value }}"

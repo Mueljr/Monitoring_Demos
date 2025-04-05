@@ -1,0 +1,15 @@
+global:
+  resolve_timeout: 5m
+
+route:
+  receiver: 'discord_receiver'
+
+receivers:
+  - name: 'discord_receiver'
+    discord_configs:
+      - webhook_url: 'https://discord.com/api/webhooks/your-webhook-id/your-webhook-token'
+        message: |
+          **Alert:** {{ .CommonLabels.alertname }}
+          **Severity:** {{ .CommonLabels.severity }}
+          **Description:** {{ .CommonAnnotations.description | default "No description provided." }}
+        send_resolved: true
